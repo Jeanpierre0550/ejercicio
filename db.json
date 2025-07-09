@@ -1,0 +1,13 @@
+{
+    "users": [
+      { "id": 1, "username": "admin", "password": "admin", "role": "admin" },
+      { "id": 2, "username": "juan", "password": "1234", "role": "user" }
+    ],
+    "classes": [
+      { "id": 1, "name": "Yoga", "date": "2025-07-12", "time": "10:00", "capacity": 5 }
+    ],
+    "reservations": [
+      { "id": 1, "userId": 2, "classId": 1 }
+    ]
+  }
+  

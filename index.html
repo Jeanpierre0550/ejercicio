@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Reservas de Clases</title>
+  <link rel="stylesheet" href="/ejercicio/src/style.css" />
+</head>
+<body>
+  <header id="principal-header" hidden>
+    <nav>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/employee">Employee</a></li>
+        <li><a href="/users">Users</a></li>
+      </ul>
+    </nav>
+    <button id="logOut"> Logout</button>
+  </header>
+  <div id="app">
+    <h1>Sistema de Reservas</h1>
+
+    <div id="login-section">
+      <form id="login-form">
+        <input type="text" id="username" placeholder="Usuario" required />
+        <input type="password" id="password" placeholder="Contraseña" required />
+        <button type="submit">Iniciar Sesión</button>
+      </form>
+    </div>
+
+    <div id="main-content" style="display:none;">
+      <button id="logout-btn">Cerrar sesión</button>
+      <div id="content"></div>
+    </div>
+  </div>
+
+  <script type="module" src="/ejercicio/src/main.js"></script>
+</body>
+</html>

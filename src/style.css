@@ -1,0 +1,15 @@
+body.admin {
+  background-color: #fdffca;
+}
+
+body.user {
+  background-color: #fffaf0;
+}
+
+form {
+  margin: 20px;
+}
+
+button {
+  margin-top: 10px;
+}
