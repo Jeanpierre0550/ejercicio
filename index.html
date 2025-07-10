@@ -2,37 +2,15 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <title>Reservas de Clases</title>
-  <link rel="stylesheet" href="/ejercicio/src/style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sistema de Reservas de Clases</title>
+  <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
-  <header id="principal-header" hidden>
-    <nav>
-      <ul>
-        <li><a href="/">Home</a></li>
-        <li><a href="/employee">Employee</a></li>
-        <li><a href="/users">Users</a></li>
-      </ul>
-    </nav>
-    <button id="logOut"> Logout</button>
-  </header>
   <div id="app">
-    <h1>Sistema de Reservas</h1>
-
-    <div id="login-section">
-      <form id="login-form">
-        <input type="text" id="username" placeholder="Usuario" required />
-        <input type="password" id="password" placeholder="Contraseña" required />
-        <button type="submit">Iniciar Sesión</button>
-      </form>
-    </div>
-
-    <div id="main-content" style="display:none;">
-      <button id="logout-btn">Cerrar sesión</button>
-      <div id="content"></div>
-    </div>
+    <h2>Cargando...</h2>
   </div>
 
-  <script type="module" src="/ejercicio/src/main.js"></script>
+  <script type="module" src="./src/controller/main.js"></script>
 </body>
 </html>

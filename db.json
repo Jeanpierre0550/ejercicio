@@ -1,13 +1,116 @@
 {
-    "users": [
-      { "id": 1, "username": "admin", "password": "admin", "role": "admin" },
-      { "id": 2, "username": "juan", "password": "1234", "role": "user" }
-    ],
-    "classes": [
-      { "id": 1, "name": "Yoga", "date": "2025-07-12", "time": "10:00", "capacity": 5 }
-    ],
-    "reservations": [
-      { "id": 1, "userId": 2, "classId": 1 }
-    ]
-  }
-  
+  "users": [
+    {
+      "id": "1",
+      "username": "admin",
+      "password": "admin",
+      "role": "admin"
+    },
+    {
+      "id": "2",
+      "username": "juan",
+      "password": "1234",
+      "role": "user"
+    }
+  ],
+  "classes": [
+    {
+      "id": "1",
+      "name": "Yoga",
+      "date": "2025-07-12",
+      "time": "10:00",
+      "capacity": 5
+    },
+    {
+      "id": "2",
+      "name": "Pilates",
+      "date": "2025-07-13",
+      "time": "08:00",
+      "capacity": 8
+    },
+    {
+      "id": "3",
+      "name": "Spinning",
+      "date": "2025-07-14",
+      "time": "18:30",
+      "capacity": 10
+    },
+    {
+      "id": "957c",
+      "name": "Jean Pierre",
+      "date": "2222-02-22",
+      "time": "11:11",
+      "capacity": 2
+    },
+    {
+      "id": "b97c",
+      "name": "gym",
+      "date": "275760-05-05",
+      "time": "05:55",
+      "capacity": 5
+    }
+  ],
+  "reservations": [
+    {
+      "id": "1",
+      "userId": 2,
+      "classId": 1
+    },
+    {
+      "id": "2",
+      "userId": 2,
+      "classId": 2
+    },
+    {
+      "id": "2d88",
+      "classId": "957c",
+      "userId": 2,
+      "fecha": "2025-07-10T14:43:50.362Z"
+    },
+    {
+      "id": "1b4c",
+      "classId": "1",
+      "userId": 2,
+      "fecha": "2025-07-10T14:44:08.548Z"
+    },
+    {
+      "id": "34aa",
+      "classId": "957c",
+      "fecha": "2025-07-10T14:48:11.603Z"
+    },
+    {
+      "id": "3d00",
+      "classId": "2",
+      "fecha": "2025-07-10T14:48:13.810Z"
+    },
+    {
+      "id": "9a31",
+      "classId": "1",
+      "fecha": "2025-07-10T14:48:14.915Z"
+    },
+    {
+      "id": "f77b",
+      "classId": "1",
+      "userId": 2,
+      "fecha": "2025-07-10T16:13:20.344Z"
+    },
+    {
+      "id": "07a1",
+      "classId": "b97c",
+      "userId": 2,
+      "fecha": "2025-07-10T16:13:39.766Z"
+    },
+    {
+      "id": "9856",
+      "classId": "b97c",
+      "userId": 2,
+      "fecha": "2025-07-10T16:13:54.879Z"
+    },
+    {
+      "id": "43b6",
+      "classId": "1",
+      "userId": 2,
+      "fecha": "2025-07-10T16:14:00.352Z"
+    }
+  ]
+}

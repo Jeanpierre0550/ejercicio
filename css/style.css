@@ -1,0 +1,26 @@
+body {
+  font-family: sans-serif;
+  padding: 2rem;
+  background-color: #f9f9f9;
+}
+.login-container, .register-container, .home-container, .clases-container, .admin-clases-container {
+  max-width: 500px;
+  margin: auto;
+  background: white;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+button {
+  display: block;
+  width: 100%;
+  padding: 0.7rem;
+  margin: 0.5rem 0;
+}
+input{
+  display: block;
+  width: 94.5%;
+  padding: 0.7rem;
+  margin: 0.5rem 0;
+
+}
