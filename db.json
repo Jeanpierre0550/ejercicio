@@ -40,7 +40,8 @@
       "name": "Jean Pierre",
       "date": "2222-02-22",
       "time": "11:11",
-      "capacity": 2
+      "capacity": 2,
+      "isActive": false
     },
     {
       "id": "b97c",
@@ -111,6 +112,18 @@
       "classId": "1",
       "userId": 2,
       "fecha": "2025-07-10T16:14:00.352Z"
+    },
+    {
+      "id": "9a56",
+      "classId": "2",
+      "userId": 2,
+      "fecha": "2025-07-10T23:42:34.399Z"
+    },
+    {
+      "id": "c77b",
+      "classId": "2",
+      "userId": 2,
+      "fecha": "2025-07-11T13:32:24.256Z"
     }
   ]
 }

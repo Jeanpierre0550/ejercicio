@@ -1,14 +1,19 @@
 <div class="home-container">
-  <h1>Bienvenido</h1>
-  <p id="welcome-msg"></p>
+  <h2 id="welcome-msg">Bienvenido</h2>
 
-  <div id="admin-options" style="display:none;">
-    <a href="#/admin/clases">Gestionar Clases</a>
+  <div id="admin-options" style="display: none;">
+    <p>Opciones de administrador:</p>
+    <a href="#/admin/clases">
+      <button class="home-button">Gestionar Clases</button>
+    </a>
   </div>
 
-  <div id="user-options" style="display:none;">
-    <a href="#/clases">Ver Clases Disponibles</a>
+  <div id="user-options" style="display: none;">
+    <p>Opciones de usuario:</p>
+    <a href="#/clases">
+      <button class="home-button">Ver Clases Disponibles</button>
+    </a>
   </div>
 
-  <button id="logoutBtn">Cerrar sesión</button>
+  <button id="logoutBtn" class="logout-btn">Cerrar sesión</button>
 </div>

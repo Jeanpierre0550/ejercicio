@@ -1,12 +1,12 @@
 import { auth } from './auth.js';
-import { getClases, createClase } from './clases.js';
+import { getClases, createClase, updateClase, deleteClase } from './clases.js';
 import { reservarClase } from './reservas.js';
 
 let usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
 let userLoggeado = JSON.parse(localStorage.getItem("user"));
 
 const routes = {
-    "/": "/src/views/home.html",
+  "/": "/src/views/home.html",
   "/404": "/src/views/404.html",
   "/login": "/src/views/login.html",
   "/register": "/src/views/register.html",
@@ -20,12 +20,21 @@ export async function renderRoute() {
   const isAuth = auth.isAuthenticated();
   userLoggeado = JSON.parse(localStorage.getItem("user"));
 
+  // Bloquear rutas privadas si no está logueado
   if (!isAuth && path !== "/login" && path !== "/register") {
     location.hash = "/login";
     return;
   }
 
+  // Evitar volver a login si ya está autenticado
   if (isAuth && path === "/login") {
+    location.hash = "/";
+    return;
+  }
+
+  // Bloquear acceso a admin si no es admin
+  if (path === "/admin/clases" && userLoggeado.role !== "admin") {
+    alert("Acceso no autorizado");
     location.hash = "/";
     return;
   }
@@ -41,6 +50,7 @@ export async function renderRoute() {
     const html = await res.text();
     app.innerHTML = html;
 
+    // LOGIN
     if (path === "/login") {
       const form = document.getElementById("loginForm");
       const error = document.getElementById("loginError");
@@ -58,11 +68,12 @@ export async function renderRoute() {
         }
       });
 
-      document.getElementById("sign-up").addEventListener("click", () => {
+      document.getElementById("sign-up")?.addEventListener("click", () => {
         location.hash = "/register";
       });
     }
 
+    // REGISTRO
     if (path === "/register") {
       const form = document.getElementById("registerForm");
       form?.addEventListener("submit", (e) => {
@@ -78,16 +89,17 @@ export async function renderRoute() {
             password: form.password.value.trim(),
             name: form.name.value.trim(),
             lastname: form.lastname.value.trim(),
-            role: "user"
+            role: form.role.value
           };
           usuarios.push(nuevo);
           localStorage.setItem("usuarios", JSON.stringify(usuarios));
-          alert("Usuario registrado");
+          alert("Usuario registrado correctamente");
           location.hash = "/login";
         }
       });
     }
 
+    // HOME
     if (path === "/") {
       document.getElementById("welcome-msg").textContent = `Hola, ${userLoggeado.name}`;
       if (userLoggeado.role === "admin") {
@@ -97,6 +109,7 @@ export async function renderRoute() {
       }
     }
 
+    // CLASES (usuario)
     if (path === "/clases") {
       const lista = document.getElementById("clase-list");
       const clases = await getClases();
@@ -113,6 +126,7 @@ export async function renderRoute() {
       });
     }
 
+    // ADMIN CLASES (solo admin)
     if (path === "/admin/clases") {
       const form = document.getElementById("formClase");
       const claseIdInput = document.getElementById("claseId");
@@ -133,6 +147,18 @@ export async function renderRoute() {
         claseList.appendChild(li);
       });
 
+      // Abrir modal
+      document.getElementById("openModal")?.addEventListener("click", () => {
+        document.getElementById("modal").style.display = "flex";
+        form.reset();
+        claseIdInput.value = "";
+      });
+
+      document.getElementById("closeModal")?.addEventListener("click", () => {
+        document.getElementById("modal").style.display = "none";
+      });
+
+      // Editar
       document.querySelectorAll(".edit").forEach(btn => {
         btn.addEventListener("click", () => {
           const id = btn.dataset.id;
@@ -142,9 +168,11 @@ export async function renderRoute() {
           dateInput.value = clase.date;
           timeInput.value = clase.time;
           capacityInput.value = clase.capacity;
+          document.getElementById("modal").style.display = "flex";
         });
       });
 
+      // Eliminar
       document.querySelectorAll(".delete").forEach(btn => {
         btn.addEventListener("click", () => {
           const id = btn.dataset.id;
@@ -152,6 +180,7 @@ export async function renderRoute() {
         });
       });
 
+      // Guardar clase
       form.addEventListener("submit", async (e) => {
         e.preventDefault();
         const clase = {
@@ -166,14 +195,17 @@ export async function renderRoute() {
         } else {
           await createClase(clase);
         }
+        document.getElementById("modal").style.display = "none";
         location.reload();
       });
     }
 
+    // Cerrar sesión
     document.getElementById("logoutBtn")?.addEventListener("click", () => {
       auth.logout();
       location.hash = "/login";
     });
+
   } catch (err) {
     console.error(err);
     app.innerHTML = "<h2>Error al cargar vista</h2>";

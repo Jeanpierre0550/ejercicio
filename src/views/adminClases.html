@@ -1,14 +1,24 @@
 <div class="admin-clases-container">
   <h2>Administrar Clases</h2>
-  <form id="formClase">
-    <input type="hidden" id="claseId" />
-    <input type="text" id="name" placeholder="Nombre" required />
-    <input type="date" id="date" required />
-    <input type="time" id="time" required />
-    <input type="number" id="capacity" placeholder="Cupo" required />
-    <button type="submit">Guardar Clase</button>
-  </form>
-  <ul id="admin-clase-list"></ul>
-  <button id="logoutBtn">Cerrar sesión</button>
-</div>
 
+  <button id="openModal" class="admin-create-btn">Crear Clase</button>
+
+  <ul id="admin-clase-list" class="clase-list"></ul>
+
+  <!-- Modal para crear o editar -->
+  <div id="modal" class="modal" style="display: none;">
+    <div class="modal-content">
+      <span id="closeModal" class="close">&times;</span>
+      <form id="formClase">
+        <input type="hidden" id="claseId" />
+        <input type="text" id="name" placeholder="Nombre" required />
+        <input type="date" id="date" required />
+        <input type="time" id="time" required />
+        <input type="number" id="capacity" placeholder="Cupo máximo" required />
+        <button type="submit">Guardar Clase</button>
+      </form>
+    </div>
+  </div>
+
+  <button id="logoutBtn" class="logout-btn">Cerrar sesión</button>
+</div>
