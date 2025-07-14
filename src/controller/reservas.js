@@ -6,7 +6,7 @@ export async function reservarClase({ claseId, userId }) {
     const reservas = await axios.get(reservasURL, { params: { classId: claseId } });
     const cupoOcupado = reservas.data.length;
 
-    const clase = await axios.get(`http://localhost:3000/classes/${claseId}`);
+    const clase = await axios.get(`http://localhost:3000/products/${claseId}`);
     if (cupoOcupado >= clase.data.capacity) {
       alert("Ya no hay cupos disponibles");
       return;

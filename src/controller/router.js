@@ -1,10 +1,9 @@
 import { auth } from './auth.js';
 import { getClases, createClase, updateClase, deleteClase } from './clases.js';
 import { reservarClase } from './reservas.js';
-import { obtenerProductos, crearProducto, eliminarProducto } from './productos.js'; // 👈 Nuevo import
 
 let usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
-let userLoggeado = JSON.parse(localStorage.getItem("user"));
+let userLoggeado = JSON.parse(localStorage.getItem("visitante"));
 
 const routes = {
   "/": "src/views/home.html",
@@ -12,8 +11,9 @@ const routes = {
   "/login": "src/views/login.html",
   "/register": "src/views/register.html",
   "/clases": "src/views/clases.html",
-  "/admin/clases": "src/views/adminClases.html",
-  "/dashboard": "src/views/dashboard.html"
+  "/dashboard": "src/views/dashboard.html",
+
+  
 };
 
 
@@ -33,7 +33,7 @@ export async function renderRoute() {
     return;
   }
 
-  if (path === "/admin/clases" && userLoggeado.role !== "admin") {
+  if (path === "/dashboard" && userLoggeado.role !== "admin") {
     alert("Acceso no autorizado");
     location.hash = "/";
     return;
@@ -75,15 +75,17 @@ export async function renderRoute() {
       });
     }
 
-    // REGISTRO
+    // REGISTER
     if (path === "/register") {
       const form = document.getElementById("registerForm");
       form?.addEventListener("submit", (e) => {
         e.preventDefault();
+    
         const username = form.username.value.trim();
         const userExist = usuarios.find((u) => u.username === username);
+    
         if (userExist) {
-          alert("Ya existe");
+          alert("Ya existe un usuario con ese nombre.");
         } else {
           const nuevo = {
             id: usuarios.length + 1,
@@ -93,9 +95,10 @@ export async function renderRoute() {
             lastname: form.lastname.value.trim(),
             role: form.role.value,
           };
+    
           usuarios.push(nuevo);
           localStorage.setItem("usuarios", JSON.stringify(usuarios));
-          alert("Usuario registrado correctamente");
+          alert("Usuario registrado correctamente.");
           location.hash = "/login";
         }
       });
@@ -119,7 +122,7 @@ export async function renderRoute() {
       const clases = await getClases();
       clases.forEach((c) => {
         const li = document.createElement("li");
-        li.textContent = `${c.name} - ${c.date} ${c.time}`;
+        li.textContent = `${c.name} -- Fecha: ${c.date} -- Hora: ${c.time} -- Unidades: ${c.capacity}`;
         const btn = document.createElement("button");
         btn.textContent = "Reservar";
         btn.addEventListener("click", () => {
@@ -131,7 +134,7 @@ export async function renderRoute() {
     }
 
     // ADMIN CLASES
-    if (path === "/admin/clases") {
+    if (path === "/dashboard") {
       const form = document.getElementById("formClase");
       const claseIdInput = document.getElementById("claseId");
       const nameInput = document.getElementById("name");
@@ -144,7 +147,7 @@ export async function renderRoute() {
       clases.forEach((c) => {
         const li = document.createElement("li");
         li.innerHTML = `
-          <strong>${c.name}</strong> - ${c.date} ${c.time} (Cupo: ${c.capacity})
+          <strong>${c.name}</strong> - ${c.date} ${c.time} (Unidades: ${c.capacity})
           <button class="edit" data-id="${c.id}">Editar</button>
           <button class="delete" data-id="${c.id}">Eliminar</button>
         `;
@@ -198,48 +201,6 @@ export async function renderRoute() {
         document.getElementById("modal").style.display = "none";
         location.reload();
       });
-    }
-
-    // DASHBOARD CRUD productos
-    if (path === "/dashboard") {
-      if (userLoggeado.role !== "admin") {
-        alert("Acceso no autorizado");
-        location.hash = "/";
-        return;
-      }
-
-      const form = document.getElementById("form-producto");
-      const lista = document.getElementById("lista");
-
-      const productos = await obtenerProductos();
-
-      productos.forEach((p) => {
-        const li = document.createElement("li");
-        li.className = "list-group-item d-flex justify-content-between";
-        li.innerHTML = `
-          ${p.nombre} - $${p.precio}
-          <button class="btn btn-sm btn-danger" data-id="${p.id}">Eliminar</button>
-        `;
-        lista.appendChild(li);
-      });
-
-      document.querySelectorAll("[data-id]").forEach((btn) => {
-        btn.addEventListener("click", () => {
-          eliminarProducto(btn.dataset.id).then(() => location.reload());
-        });
-      });
-
-      form.addEventListener("submit", (e) => {
-        e.preventDefault();
-        const nombre = form.nombre.value;
-        const precio = form.precio.value;
-        crearProducto({ nombre, precio }).then(() => location.reload());
-      });
-
-      document.getElementById("cerrar").onclick = () => {
-        auth.logout();
-        location.hash = "/login";
-      };
     }
 
     // Cerrar sesión

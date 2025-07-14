@@ -1,10 +1,23 @@
-<h2>Dashboard Admin</h2>
-<button class="btn btn-danger mb-2" id="cerrar">Cerrar sesión</button>
+<div class="admin-clases-container">
+  <h2>Administrar Productos</h2>
 
-<form id="form-producto" class="mb-3">
-  <input class="form-control mb-2" name="nombre" placeholder="Nombre" required>
-  <input class="form-control mb-2" name="precio" placeholder="Precio" required>
-  <button class="btn btn-success">Guardar</button>
-</form>
+  <button id="openModal" class="admin-create-btn">Añadir productos</button>
 
-<ul class="list-group" id="lista"></ul>
+  <ul id="admin-clase-list" class="clase-list"></ul>
+
+  <div id="modal" class="modal" style="display: none;">
+    <div class="modal-content">
+      <span id="closeModal" class="close">&times;</span>
+      <form id="formClase">
+        <input type="hidden" id="claseId" />
+        <input type="text" id="name" placeholder="Nombre" required />
+        <input type="date" id="date" required />
+        <input type="time" id="time" required />
+        <input type="number" id="capacity" placeholder="Cupacidad máxima" required />
+        <button type="submit">Guardar</button>
+      </form>
+    </div>
+  </div>
+
+  <button id="logoutBtn" class="logout-btn">Cerrar sesión</button>
+</div>

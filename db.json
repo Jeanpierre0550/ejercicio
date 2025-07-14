@@ -11,44 +11,25 @@
       "username": "juan",
       "password": "1234",
       "role": "user"
+    },
+    {
+      "id": "2904"
     }
   ],
-  "classes": [
+  "products": [
     {
-      "id": "1",
-      "name": "Yoga",
-      "date": "2025-07-12",
+      "name": "banano",
+      "date": "2004-09-05",
       "time": "10:00",
-      "capacity": 5
-    },
-    {
-      "id": "2",
-      "name": "Pilates",
-      "date": "2025-07-13",
-      "time": "08:00",
-      "capacity": 8
-    },
-    {
-      "id": "3",
-      "name": "Spinning",
-      "date": "2025-07-14",
-      "time": "18:30",
-      "capacity": 10
-    },
-    {
-      "id": "957c",
-      "name": "Jean Pierre",
-      "date": "2222-02-22",
-      "time": "11:11",
       "capacity": 2,
-      "isActive": false
+      "id": "ed0e"
     },
     {
-      "id": "b97c",
-      "name": "gym",
-      "date": "275760-05-05",
-      "time": "05:55",
-      "capacity": 5
+      "name": "sandia",
+      "date": "0005-09-05",
+      "time": "21:00",
+      "capacity": 5,
+      "id": "ac78"
     }
   ],
   "reservations": [
@@ -63,67 +44,49 @@
       "classId": 2
     },
     {
-      "id": "2d88",
-      "classId": "957c",
+      "id": "2c82",
+      "classId": "ac78",
       "userId": 2,
-      "fecha": "2025-07-10T14:43:50.362Z"
+      "fecha": "2025-07-14T13:50:10.683Z"
     },
     {
-      "id": "1b4c",
-      "classId": "1",
+      "id": "db8e",
+      "classId": "ed0e",
       "userId": 2,
-      "fecha": "2025-07-10T14:44:08.548Z"
+      "fecha": "2025-07-14T13:54:56.288Z"
     },
     {
-      "id": "34aa",
-      "classId": "957c",
-      "fecha": "2025-07-10T14:48:11.603Z"
-    },
-    {
-      "id": "3d00",
-      "classId": "2",
-      "fecha": "2025-07-10T14:48:13.810Z"
-    },
-    {
-      "id": "9a31",
-      "classId": "1",
-      "fecha": "2025-07-10T14:48:14.915Z"
-    },
-    {
-      "id": "f77b",
-      "classId": "1",
+      "id": "2d14",
+      "classId": "ac78",
       "userId": 2,
-      "fecha": "2025-07-10T16:13:20.344Z"
+      "fecha": "2025-07-14T13:55:02.126Z"
     },
     {
-      "id": "07a1",
-      "classId": "b97c",
-      "userId": 2,
-      "fecha": "2025-07-10T16:13:39.766Z"
+      "id": "745f",
+      "classId": "ed0e",
+      "userId": 4,
+      "fecha": "2025-07-14T13:55:34.428Z"
     },
     {
-      "id": "9856",
-      "classId": "b97c",
-      "userId": 2,
-      "fecha": "2025-07-10T16:13:54.879Z"
+      "id": "8b54",
+      "classId": "ac78",
+      "userId": 4,
+      "fecha": "2025-07-14T13:57:48.965Z"
     },
     {
-      "id": "43b6",
-      "classId": "1",
-      "userId": 2,
-      "fecha": "2025-07-10T16:14:00.352Z"
+      "id": "d8b0",
+      "classId": "ac78",
+      "userId": 4,
+      "fecha": "2025-07-14T13:57:53.572Z"
     },
     {
-      "id": "9a56",
-      "classId": "2",
-      "userId": 2,
-      "fecha": "2025-07-10T23:42:34.399Z"
+      "id": "ceda",
+      "classId": "ac78",
+      "userId": 4,
+      "fecha": "2025-07-14T13:57:54.942Z"
     },
     {
-      "id": "c77b",
-      "classId": "2",
-      "userId": 2,
-      "fecha": "2025-07-11T13:32:24.256Z"
+      "id": "a4d7"
     }
   ]
 }
