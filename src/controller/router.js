@@ -1,18 +1,21 @@
 import { auth } from './auth.js';
 import { getClases, createClase, updateClase, deleteClase } from './clases.js';
 import { reservarClase } from './reservas.js';
+import { obtenerProductos, crearProducto, eliminarProducto } from './productos.js'; // 👈 Nuevo import
 
 let usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
 let userLoggeado = JSON.parse(localStorage.getItem("user"));
 
 const routes = {
-  "/": "/src/views/home.html",
-  "/404": "/src/views/404.html",
-  "/login": "/src/views/login.html",
-  "/register": "/src/views/register.html",
-  "/clases": "/src/views/clases.html",
-  "/admin/clases": "/src/views/adminClases.html"
+  "/": "src/views/home.html",
+  "/404": "src/views/404.html",
+  "/login": "src/views/login.html",
+  "/register": "src/views/register.html",
+  "/clases": "src/views/clases.html",
+  "/admin/clases": "src/views/adminClases.html",
+  "/dashboard": "src/views/dashboard.html"
 };
+
 
 export async function renderRoute() {
   const path = location.hash.slice(1) || "/";
@@ -20,19 +23,16 @@ export async function renderRoute() {
   const isAuth = auth.isAuthenticated();
   userLoggeado = JSON.parse(localStorage.getItem("user"));
 
-  // Bloquear rutas privadas si no está logueado
   if (!isAuth && path !== "/login" && path !== "/register") {
     location.hash = "/login";
     return;
   }
 
-  // Evitar volver a login si ya está autenticado
   if (isAuth && path === "/login") {
     location.hash = "/";
     return;
   }
 
-  // Bloquear acceso a admin si no es admin
   if (path === "/admin/clases" && userLoggeado.role !== "admin") {
     alert("Acceso no autorizado");
     location.hash = "/";
@@ -59,7 +59,9 @@ export async function renderRoute() {
         e.preventDefault();
         const username = form.username.value.trim();
         const password = form.password.value.trim();
-        const usuario = usuarios.find(u => u.username === username && u.password === password);
+        const usuario = usuarios.find(
+          (u) => u.username === username && u.password === password
+        );
         if (usuario) {
           auth.login("fake-token", usuario);
           location.hash = "/";
@@ -79,7 +81,7 @@ export async function renderRoute() {
       form?.addEventListener("submit", (e) => {
         e.preventDefault();
         const username = form.username.value.trim();
-        const userExist = usuarios.find(u => u.username === username);
+        const userExist = usuarios.find((u) => u.username === username);
         if (userExist) {
           alert("Ya existe");
         } else {
@@ -89,7 +91,7 @@ export async function renderRoute() {
             password: form.password.value.trim(),
             name: form.name.value.trim(),
             lastname: form.lastname.value.trim(),
-            role: form.role.value
+            role: form.role.value,
           };
           usuarios.push(nuevo);
           localStorage.setItem("usuarios", JSON.stringify(usuarios));
@@ -101,7 +103,9 @@ export async function renderRoute() {
 
     // HOME
     if (path === "/") {
-      document.getElementById("welcome-msg").textContent = `Hola, ${userLoggeado.name}`;
+      document.getElementById(
+        "welcome-msg"
+      ).textContent = `Hola, ${userLoggeado.name}`;
       if (userLoggeado.role === "admin") {
         document.getElementById("admin-options").style.display = "block";
       } else {
@@ -113,7 +117,7 @@ export async function renderRoute() {
     if (path === "/clases") {
       const lista = document.getElementById("clase-list");
       const clases = await getClases();
-      clases.forEach(c => {
+      clases.forEach((c) => {
         const li = document.createElement("li");
         li.textContent = `${c.name} - ${c.date} ${c.time}`;
         const btn = document.createElement("button");
@@ -126,7 +130,7 @@ export async function renderRoute() {
       });
     }
 
-    // ADMIN CLASES (solo admin)
+    // ADMIN CLASES
     if (path === "/admin/clases") {
       const form = document.getElementById("formClase");
       const claseIdInput = document.getElementById("claseId");
@@ -147,7 +151,6 @@ export async function renderRoute() {
         claseList.appendChild(li);
       });
 
-      // Abrir modal
       document.getElementById("openModal")?.addEventListener("click", () => {
         document.getElementById("modal").style.display = "flex";
         form.reset();
@@ -158,11 +161,10 @@ export async function renderRoute() {
         document.getElementById("modal").style.display = "none";
       });
 
-      // Editar
-      document.querySelectorAll(".edit").forEach(btn => {
+      document.querySelectorAll(".edit").forEach((btn) => {
         btn.addEventListener("click", () => {
           const id = btn.dataset.id;
-          const clase = clases.find(c => c.id == id);
+          const clase = clases.find((c) => c.id == id);
           claseIdInput.value = clase.id;
           nameInput.value = clase.name;
           dateInput.value = clase.date;
@@ -172,22 +174,20 @@ export async function renderRoute() {
         });
       });
 
-      // Eliminar
-      document.querySelectorAll(".delete").forEach(btn => {
+      document.querySelectorAll(".delete").forEach((btn) => {
         btn.addEventListener("click", () => {
           const id = btn.dataset.id;
           deleteClase(id).then(() => location.reload());
         });
       });
 
-      // Guardar clase
       form.addEventListener("submit", async (e) => {
         e.preventDefault();
         const clase = {
           name: nameInput.value,
           date: dateInput.value,
           time: timeInput.value,
-          capacity: parseInt(capacityInput.value)
+          capacity: parseInt(capacityInput.value),
         };
         const id = claseIdInput.value;
         if (id) {
@@ -200,12 +200,53 @@ export async function renderRoute() {
       });
     }
 
+    // DASHBOARD CRUD productos
+    if (path === "/dashboard") {
+      if (userLoggeado.role !== "admin") {
+        alert("Acceso no autorizado");
+        location.hash = "/";
+        return;
+      }
+
+      const form = document.getElementById("form-producto");
+      const lista = document.getElementById("lista");
+
+      const productos = await obtenerProductos();
+
+      productos.forEach((p) => {
+        const li = document.createElement("li");
+        li.className = "list-group-item d-flex justify-content-between";
+        li.innerHTML = `
+          ${p.nombre} - $${p.precio}
+          <button class="btn btn-sm btn-danger" data-id="${p.id}">Eliminar</button>
+        `;
+        lista.appendChild(li);
+      });
+
+      document.querySelectorAll("[data-id]").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          eliminarProducto(btn.dataset.id).then(() => location.reload());
+        });
+      });
+
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const nombre = form.nombre.value;
+        const precio = form.precio.value;
+        crearProducto({ nombre, precio }).then(() => location.reload());
+      });
+
+      document.getElementById("cerrar").onclick = () => {
+        auth.logout();
+        location.hash = "/login";
+      };
+    }
+
     // Cerrar sesión
     document.getElementById("logoutBtn")?.addEventListener("click", () => {
       auth.logout();
       location.hash = "/login";
     });
-
   } catch (err) {
     console.error(err);
     app.innerHTML = "<h2>Error al cargar vista</h2>";
